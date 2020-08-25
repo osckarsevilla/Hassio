@@ -19,7 +19,7 @@
 .cloud
 .google.token
 .vscode
-www
+*.jpg
 
 # Estos son los archivos que no estaran publicos en github
 ## ip_bans.yaml  # ejemplo
