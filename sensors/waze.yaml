@@ -1,0 +1,5 @@
+platform: waze_travel_time
+name: "Tiempo Viaje "
+origin: sensor.orig_address
+destination: sensor.dest_address
+region: 'EU'

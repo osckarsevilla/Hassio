@@ -1,0 +1,18 @@
+platform: template
+sensors:
+  lavadora_amperios:
+    value_template: '{{ states.switch.lavadora.attributes.current_a}}'
+    unit_of_measurement: 'A'
+    friendly_name: 'Lavadora Amperios'
+  lavadora_voltios:
+    value_template: '{{ states.switch.lavadora.attributes.voltage}}'
+    unit_of_measurement: 'V'
+    friendly_name: 'Lavadora Voltios'
+  lavadora_watios:
+    value_template: '{{ states.switch.lavadora.attributes.current_power_w}}'
+    unit_of_measurement: 'W'
+    friendly_name: 'Lavadora Consumo'
+  lavadora_total_kw:
+    value_template: '{{ states.switch.lavadora.attributes.total_energy_kwh}}'
+    unit_of_measurement: 'kWh'
+    friendly_name: 'Lavadora Consumo Total'

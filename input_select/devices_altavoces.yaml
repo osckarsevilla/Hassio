@@ -1,0 +1,9 @@
+
+seleccion_altavoces:
+  name: Altavoces
+  options:
+    - Echo
+    - Salon
+    - Dormitorio principal
+    - Alejandra
+  icon: mdi:cast

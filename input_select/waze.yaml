@@ -1,0 +1,17 @@
+#### Waze
+  destino:
+    name: Destino
+    options:
+      - Casa
+      - Trabajo Rocio
+      - Casa Rocio
+      - Rodrigo
+      - Barbate
+  origen:
+    name: Origen
+    options:
+      - Casa
+      - Trabajo rocio
+      - Casa Rocio
+      - Rodrigo
+      - Barbate

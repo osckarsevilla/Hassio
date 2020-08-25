@@ -1,0 +1,8 @@
+
+edison_source:
+  name: Source Edison
+  options:
+    - MiBox
+    - Deco
+
+  

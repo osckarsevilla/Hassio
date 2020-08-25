@@ -1,0 +1,6 @@
+platform: template
+sensors:
+  speedtest_ping_max:
+    value_template: "{{ state_attr('sensor.speedtest_ping_stats', 'max_value') }}"
+  speedtest_ping_min:
+    value_template: "{{ state_attr('sensor.speedtest_ping_stats', 'min_value') }}"

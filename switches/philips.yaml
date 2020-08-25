@@ -1,0 +1,11 @@
+platform: broadlink
+host: !secret host_salon
+mac: !secret mac_salon
+timeout: 10
+#retry: 5
+switches:
+  tv_phillips:
+    friendly_name: "Phillips Tv Power"
+    command_on: 'JgBUAFcfDR8ODw4QKy0ODw4QDRAOEA0QDg8OEA4QDRAODw4QHBAOHg4QDQAKyVYfDh4ODw4QKy0OEA0QDg8OEA0QDhANEA4QDRAOEA0QHBAOHg4QDQANBQAAAAA'
+    command_off: 'JgBUAFcfDR8ODw4QKy0ODw4QDRAOEA0QDg8OEA4QDRAODw4QHBAOHg4QDQAKyVYfDh4ODw4QKy0OEA0QDg8OEA0QDhANEA4QDRAOEA0QHBAOHg4QDQANBQAAAAA'
+ 

@@ -1,0 +1,7 @@
+### Sensor Upload Max-Min ###
+platform: template
+sensors:
+  speedtest_upload_max:
+    value_template: "{{ state_attr('sensor.speedtest_upload_stats', 'max_value') }}"
+  speedtest_upload_min:
+    value_template: "{{ state_attr('sensor.speedtest_upload_stats', 'min_value') }}"

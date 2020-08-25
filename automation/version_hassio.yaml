@@ -1,0 +1,22 @@
+- id: update_notification
+  alias: Update Home Assistant
+  trigger:
+  - entity_id: binary_sensor.updater
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      message: Nueva version de Hassio disponible.
+    service: notify.oscar_telegram
+  - data:
+      data:
+        type: announce
+      message: Oscar,nueva versón de Home Assistant disponible
+      target: media_player.salon
+    data_template:
+      custom_message: "{{ [\n \"Meus criadores informaram que existe atualizações\
+        \ para minha programação.\",\n \"Tenho uma nova atualização para meu sistema.\"\
+        ,\n \"Uma nova atualização foi disponibilizada para meu sistema.\",\n \"Recebi\
+        \ o aviso que tenho uma nova atualização.\"\n ] | random }}   \n"
+    service: notify.alexa_media

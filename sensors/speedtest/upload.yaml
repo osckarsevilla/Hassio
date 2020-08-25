@@ -1,0 +1,4 @@
+platform: statistics
+entity_id: sensor.speedtest_upload
+name: Speedtest Upload Stats
+sampling_size: 144

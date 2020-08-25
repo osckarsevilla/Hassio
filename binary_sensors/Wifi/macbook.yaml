@@ -1,0 +1,5 @@
+platform: ping
+host: 192.168.31.5
+name: MacBook 
+scan_interval: 30
+count: 6

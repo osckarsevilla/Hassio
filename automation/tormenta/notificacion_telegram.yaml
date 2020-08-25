@@ -1,0 +1,12 @@
+- id: TORMENTA NOTIFICACION
+  alias: Tormenta notificacion
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability
+    platform: numeric_state
+    above: 70
+  action:
+  - data_template:
+      message: La probabilidad de lluvia es de {{states.sensor.palmete_precip_probability.state}}%.
+      title: ATENCION TORMENTA
+    service: notify.oscar_telegram

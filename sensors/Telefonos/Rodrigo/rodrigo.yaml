@@ -1,0 +1,9 @@
+platform: template
+sensors:
+  bateria_rodrigo:
+    friendly_name: Bateria rodrigo life
+    unit_of_measurement: '%'
+    value_template: '{{ states.device_tracker.life360_rodrigo.attributes.battery|round }}'
+    device_class: battery
+
+   

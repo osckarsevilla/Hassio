@@ -1,0 +1,33 @@
+platform: template
+sensors:
+  dest_address:
+    value_template: >-
+       {%- if is_state("input_select.destino", "Casa")  -%}
+         zone.home
+       {%- elif is_state("input_select.destino", "Trabajo Rocio")  -%}
+         zone.trabajo_rocio
+       {%- elif is_state("input_select.destino", "Casa Rocio")  -%}
+         zone.casa_rocio
+       {%- elif is_state("input_select.destino", "Casa Alicante")  -%}
+        zone.casa_alicante
+       {%- elif is_state("input_select.destino", "Barbate")  -%}
+        zone.barbate
+       {%- else -%}
+         Desconocido
+       {%- endif %}
+
+  orig_address:
+    value_template: >-
+        {%- if is_state("input_select.origen", "Casa")  -%}
+          zone.home
+        {%- elif is_state("input_select.origen", "Trabajo Rocio")  -%}
+          zone.trabajo_rocio
+        {%- elif is_state("input_select.origen", "Casa Rocio")  -%}
+          zone.casa_rocio
+        {%- elif is_state("input_select.origen", "Barbate")  -%}
+          zone.barbate
+        {%- elif is_state("input_select.origen", "Casa Alicante")  -%}
+         zone.casa_alicante
+        {%- else -%}
+          Desconocido
+        {%- endif %}

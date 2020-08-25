@@ -1,0 +1,33 @@
+- id: '882'
+  alias: LAVADORA RECORDATORIO
+  trigger:
+  - entity_id: input_select.lavadora_status
+    platform: state
+    to: Finalizado
+  - event_data:
+      entity_id: timer.fin_lavadora
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data:
+      entity_id: timer.fin_lavadora
+    entity_id: timer.fin_lavadora
+    service: timer.start
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 15
+        minutos, a no ser que me avises de que ya lo has hecho
+    service: tts.google_translate_say
+  - data:
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 15
+        minutos, a no ser que me avises de que ya lo has hecho
+    service: notify.oscar
+  - data:
+      data:
+        type: announce
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 15
+        minutos, a no ser que me avises de que ya lo has hecho
+      target: media_player.echo
+    service: notify.alexa_media_salon

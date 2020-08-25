@@ -1,0 +1,5 @@
+platform: ping
+host: 192.168.31.83
+name: Xiaomi Redmi
+scan_interval: 30
+count: 7

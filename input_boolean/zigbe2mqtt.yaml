@@ -1,0 +1,4 @@
+zigbee_permiso_vinculacion:
+  name: Permitir Vinculacion
+  initial: off
+  icon: mdi:cellphone-wireless

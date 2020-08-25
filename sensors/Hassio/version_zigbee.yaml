@@ -1,0 +1,5 @@
+platform: mqtt
+name: Version Zigbee2mqtt 
+state_topic: "zigbee2mqtt/bridge/config"
+value_template: "{{ value_json.version }}"
+icon: mdi:zigbee

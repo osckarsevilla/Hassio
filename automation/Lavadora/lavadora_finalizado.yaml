@@ -1,0 +1,21 @@
+- id: '883'
+  alias: LAVADORA FINALIZADO
+  trigger:
+  - below: '5'
+    entity_id: sensor.lavadora_watios
+    for: 0:01:00
+    platform: numeric_state
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.iphone
+      state: Palmete
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Lavando
+  action:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Finalizado
+    service: input_select.select_option

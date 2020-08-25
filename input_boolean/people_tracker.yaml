@@ -1,0 +1,6 @@
+
+  
+guests_mode:
+   name: Invitados en casa
+   icon: mdi:account-alert
+   initial: off

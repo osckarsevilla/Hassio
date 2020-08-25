@@ -1,0 +1,16 @@
+- id: TORMENTA VIDEO
+  alias: Tormenta video
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability # cambiar el sensor por el vuestro
+    platform: numeric_state
+    above: 35
+  action:
+  - data_template:
+      message: La probabilidad de lluvia es de {{states.sensor.palmete_precip_probability.state}}%. # cambiar el sensor por el vuestro
+      title: ATENCION TORMENTA
+    data:
+      data:
+        video:
+          - url: https://api.sat24.com/mostrecent/SP/rainTMC
+    service: notify.oscar_telegram

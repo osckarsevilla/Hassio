@@ -1,0 +1,33 @@
+- id: '881'
+  alias: LAVADORA INICIO
+  trigger:
+  - above: '10'
+    entity_id: sensor.lavadora_watios
+    platform: numeric_state
+  condition:
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Apagado
+  action:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Lavando
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: Lavadora en marcha, en cuanto termine, te aviso para tender la ropa
+    service: tts.google_say
+  - data:
+      data:
+        type: announce
+      message: Lavadora en marcha, en cuanto termine, te aviso para tender la ropa
+      target: media_player.salon
+    service: notify.alexa_media_alejandra
+  - data:
+      message: Lavadora en marcha, cuando termine te avisare
+    service: notify.mobile_app_oneplus
+  - data:
+      message: Lavadora en marcha, cuando termine te avisare
+    service: notify.oscar_telegram

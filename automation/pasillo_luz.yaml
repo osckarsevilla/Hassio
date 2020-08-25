@@ -1,0 +1,23 @@
+- id: '1585868692594'
+  alias: Pasillo luz
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.dormitorio6c2_occupancy
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
+  action:
+  - brightness_pct: 35
+    device_id: 399f05fb3c2944df8e0b572d1658a619
+    domain: light
+    entity_id: light.luz_pasillo
+    type: turn_on
+  - timeout: 00:01:30
+    wait_template: ''
+  - device_id: 399f05fb3c2944df8e0b572d1658a619
+    domain: light
+    entity_id: light.luz_pasillo
+    type: turn_off

@@ -1,0 +1,5 @@
+platform: xiaomi_miio
+name: Regleta TV
+host: 192.168.31.238
+token: !secret token_regleta
+model: zimi.powerstrip.v2

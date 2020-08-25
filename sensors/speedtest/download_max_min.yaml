@@ -1,0 +1,6 @@
+platform: template
+sensors:
+  speedtest_download_max:
+    value_template: "{{ state_attr('sensor.speedtest_download_stats', 'max_value') }}"
+  speedtest_download_min:
+    value_template: "{{ state_attr('sensor.speedtest_download_stats', 'min_value') }}"

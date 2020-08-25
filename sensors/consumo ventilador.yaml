@@ -1,0 +1,18 @@
+platform: template
+sensors:
+  ventilador_amperios:
+    value_template: '{{ states.switch.ventilador.attributes.current_a}}'
+    unit_of_measurement: 'A'
+    friendly_name: 'Ventilador Amperios'
+  ventilador_voltios:
+    value_template: '{{ states.switch.ventilador.attributes.voltage}}'
+    unit_of_measurement: 'V'
+    friendly_name: 'Ventilador Voltios'
+  ventilador_watios:
+    value_template: '{{ states.switch.ventilador.attributes.current_power_w}}'
+    unit_of_measurement: 'W'
+    friendly_name: 'Ventilador Consumo'
+  ventilador_total_kw:
+    value_template: '{{ states.switch.ventilador.attributes.total_energy_kwh}}'
+    unit_of_measurement: 'kWh'
+    friendly_name: 'Ventilador Consumo Total'

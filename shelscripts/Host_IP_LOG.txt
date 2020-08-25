@@ -1,0 +1,20 @@
+# Nmap 7.70 scan initiated Wed Aug 26 01:40:01 2020 as: nmap -sP -oG Host_IP_LOG.txt 192.168.31.1/24
+Host: 192.168.31.1 ()	Status: Up
+Host: 192.168.31.4 (RMPROPLUS-5a-57-19.Raspi)	Status: Up
+Host: 192.168.31.5 ()	Status: Up
+Host: 192.168.31.23 (RMPRO_MOVE315-eb-44-11.Raspi)	Status: Up
+Host: 192.168.31.24 ()	Status: Up
+Host: 192.168.31.47 ()	Status: Up
+Host: 192.168.31.50 ()	Status: Up
+Host: 192.168.31.60 (raspberrypi)	Status: Up
+Host: 192.168.31.83 ()	Status: Up
+Host: 192.168.31.85 (Google-Home-Mini.Raspi)	Status: Up
+Host: 192.168.31.105 ()	Status: Up
+Host: 192.168.31.133 (lumi-gateway-v3_miio72557599.Raspi)	Status: Up
+Host: 192.168.31.138 ()	Status: Up
+Host: 192.168.31.149 (iPhone-de-Oscar.Raspi)	Status: Up
+Host: 192.168.31.216 ()	Status: Up
+Host: 192.168.31.230 (android-62f7d8edf9dde905.Raspi)	Status: Up
+Host: 192.168.31.238 ()	Status: Up
+Host: 192.168.31.250 ()	Status: Up
+# Nmap done at Wed Aug 26 01:40:06 2020 -- 256 IP addresses (18 hosts up) scanned in 4.92 seconds

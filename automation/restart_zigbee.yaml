@@ -1,0 +1,15 @@
+- id: '1585861311470'
+  alias: Restart Zigbee
+  description: ''
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data:
+      addon: 7ad98f9c_zigbee2mqtt_edge
+    service: hassio.addon_stop
+  - delay: 00:01:00
+  - data:
+      addon: 7ad98f9c_zigbee2mqtt_edge
+    service: hassio.addon_start

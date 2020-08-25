@@ -1,0 +1,4 @@
+platform: diskspace
+name: Espacio Raiz
+path: "/"
+unit_of_measure: "GB"

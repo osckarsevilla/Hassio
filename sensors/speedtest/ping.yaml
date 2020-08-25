@@ -1,0 +1,5 @@
+### Sensor Ping ###
+platform: statistics
+entity_id: sensor.speedtest_ping
+name: Speedtest Ping Stats
+sampling_size: 144

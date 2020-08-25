@@ -1,0 +1,15 @@
+- id: Notificacion Echo
+  alias: tormenta echo
+  initial_state: on
+  trigger:
+  - above: '70'
+    entity_id: sensor.palmete_precip_probability
+    platform: numeric_state
+  action:
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.comedor
+      type: announce
+      volume_level: 0.5
+    message: La probabilidad de lluvia es de {{states.sensor.palmete_precip_probability.state}}%.
+    target: media_player.comedor  

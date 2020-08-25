@@ -1,22 +1,28 @@
-# Example .gitignore file for your config dir.
-# An * ensures that everything will be ignored.
-*
-# You can whitelist files/folders with !, these will not be ignored.
+# Ejemplo .gitignore  by @osckaralicante y referido de https://community.home-assistant.io/t/sharing-your-configuration-on-github/195144
+# Si pones el * los los archivos con esa extension entran en la lista blanca.
+
+# Puedes poner archivos y carpetas, esta es la lista blanca. es decir lo que no sera ignorado
 !*.yaml
 !.gitignore
 !*.md
+!*automation
+!*binary_sensors
+!*input_bolean
+!*input_selec
+!*sensors
+!*shellscripts
+!*switches
+!*themes
 
-# Ignore folders.
+# Archivos y carpetas ignoradas
 .storage
 .cloud
 .google.token
-
-
 .vscode
+www
 
-
-# Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
-ip_bans.yaml
+# Estos son los archivos que no estaran publicos en github
+## ip_bans.yaml  # ejemplo
 secrets.yaml
 known_devices.yaml
 home-assistant.log

@@ -1,0 +1,5 @@
+platform: ping
+host: 192.168.31.129
+name: iPhone 
+scan_interval: 30
+count: 7

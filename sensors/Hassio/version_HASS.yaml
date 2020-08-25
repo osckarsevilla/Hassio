@@ -1,0 +1,6 @@
+
+platform: rest
+resource: https://www.home-assistant.io/version.json
+name: Latest Version
+value_template: "{{ value_json.homeassistant.raspberrypi3 }}"
+scan_interval: 3600

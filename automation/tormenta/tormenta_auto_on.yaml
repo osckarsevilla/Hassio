@@ -1,0 +1,15 @@
+- id: TORMENTA AUTO ON
+  alias: Tormenta auto on
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability
+    platform: numeric_state
+    below: 20
+  action:
+  - delay: 00:00:15
+  - data:
+      entity_id: automation.tormenta_video
+    service: automation.turn_on  
+  - data:
+      entity_id: automation.tormenta_notificacion
+    service: automation.turn_on 

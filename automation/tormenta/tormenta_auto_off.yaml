@@ -1,0 +1,15 @@
+- id: TORMENTA AUTO OFF
+  alias: Tormenta auto off
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability # cambiar el sensor por el vuestro
+    platform: numeric_state
+    above: 35
+  action:
+  - delay: 00:00:15
+  - data:
+      entity_id: automation.tormenta_video
+    service: automation.turn_off   
+  - data:
+      entity_id: automation.tormenta_notificacion
+    service: automation.turn_off 

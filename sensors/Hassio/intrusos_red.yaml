@@ -1,0 +1,6 @@
+ platform: command_line
+ command: sudo mnt/Docker/Hassio/homeassistant/shelscripts/intrusos.sh | tail -1
+ name: 'equipos_nmap'
+ #device_class: safety # Determina el icono a usar
+ #payload_on: "Intrusos"
+ #payload_off: "OK"

@@ -1,0 +1,10 @@
+
+lavadora_status:
+  name: Estado de Lavadora
+  options:
+    - "Apagado"
+    - "Lavando"
+    - "Espera"
+    - "Finalizado"
+  initial: "Apagado"
+  icon: mdi:washing-machine    
