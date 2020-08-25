@@ -1,0 +1,583 @@
+- id: '1591444396739'
+  alias: Encender luces salón
+  description: ''
+  trigger:
+  - entity_id: sun.sun
+    platform: state
+    to: below_horizon
+  condition:
+  - condition: state
+    entity_id: device_tracker.redmi
+    state: home
+  action:
+  - data: {}
+    entity_id: switch.lampara
+    service: switch.turn_on
+  - entity_id: light.luz_salon
+    service: light.turn_on
+  mode: single
+- id: '883'
+  alias: LAVADORA FINALIZADO
+  trigger:
+  - below: '5'
+    entity_id: sensor.lavadora_watios
+    for: 0:01:00
+    platform: numeric_state
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.iphone
+      state: Home
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Lavando
+  action:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Finalizado
+    service: input_select.select_option
+  - data:
+      data:
+        type: announce
+      message: La lavadora ya termino, puedes subir a tender la ropa cuando quieras
+      target: media_player.salon
+    service: notify.alexa_media_equipo
+- id: '881'
+  alias: LAVADORA INICIO
+  trigger:
+  - above: '10'
+    entity_id: sensor.lavadora_watios
+    platform: numeric_state
+  condition:
+  - condition: state
+    entity_id: input_select.lavadora_status
+    state: Apagado
+  action:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Lavando
+    entity_id: input_select.lavadora_status
+    service: input_select.select_option
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: Lavadora en marcha, en cuanto termine, te aviso para tender la ropa
+    service: tts.google_say
+  - data:
+      data:
+        type: announce
+      message: Lavadora en marcha, en cuanto termine, te aviso para tender la ropa
+      target: media_player.salon
+    service: notify.alexa_media_equipo
+  - data:
+      message: Lavadora en marcha, cuando termine te avisare
+    service: notify.mobile_app_redmi_note_8t
+  - data:
+      message: Lavadora en marcha, cuando termine te avisare
+    service: notify.oscar_telegram
+- id: '882'
+  alias: LAVADORA RECORDATORIO
+  trigger:
+  - entity_id: input_select.lavadora_status
+    platform: state
+    to: Finalizado
+  - event_data:
+      entity_id: timer.fin_lavadora
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data:
+      entity_id: timer.fin_lavadora
+    entity_id: timer.fin_lavadora
+    service: timer.start
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 15
+        minutos, a no ser que me avises de que ya lo has hecho
+    service: tts.google_translate_say
+  - data:
+      data:
+        type: announce
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 10
+        minutos, a no ser que me avises de que ya lo has hecho
+      target: media_player.salon
+    service: notify.alexa_media
+  - timeout: 00:10:00
+    wait_template: ''
+  - data:
+      data:
+        type: announce
+      message: La lavadora ya terminó, debes tender la ropa , te lo recordaré en 10
+        minutos, a no ser que me avises de que ya lo has hecho
+      target: media_player.salon
+    service: notify.alexa_media_salon
+  mode: single
+- id: TORMENTA VIDEO
+  alias: Tormenta video
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability
+    platform: numeric_state
+    above: 35
+  action:
+  - data_template:
+      message: La probabilidad de lluvia es de {{states.sensor.palmete_precip_probability.state}}%.
+      title: ATENCION TORMENTA
+    data:
+      data:
+        video:
+        - url: https://api.sat24.com/mostrecent/SP/rainTMC
+    service: notify.oscar_telegram
+- id: '890'
+  alias: Lluvia notificación
+  description: con Acuweather
+  trigger:
+  - above: '70'
+    entity_id: sensor.casa_precipitation
+    platform: numeric_state
+  action:
+  - data:
+      message: La probabilidad de lluvia es de {{states.sensor.casa_precipitation.state}}%.
+      title: ATENCION TORMENTA
+    service: notify.oscar_telegram
+  initial_state: true
+  mode: single
+- id: TORMENTA AUTO ON
+  alias: Tormenta auto on
+  trigger:
+  - below: '20'
+    entity_id: sensor.aemet_precipitation
+    platform: numeric_state
+  action:
+  - delay: 00:00:15
+  - data:
+      entity_id: automation.tormenta_video
+    entity_id: automation.tormenta_video
+    service: automation.turn_on
+  - data:
+      entity_id: automation.tormenta_notificacion
+    entity_id: automation.tormenta_notificacion
+    service: automation.turn_on
+  initial_state: true
+  mode: single
+- id: TORMENTA AUTO OFF
+  alias: Tormenta auto off
+  initial_state: true
+  trigger:
+  - entity_id: sensor.palmete_precip_probability
+    platform: numeric_state
+    above: 35
+  action:
+  - delay: 00:00:15
+  - data:
+      entity_id: automation.tormenta_video
+    service: automation.turn_off
+  - data:
+      entity_id: automation.tormenta_notificacion
+    service: automation.turn_off
+- id: '1592236049795'
+  alias: Me voy
+  description: ''
+  trigger:
+  - entity_id: sun.sun
+    platform: state
+    to: below_horizon
+  condition:
+  - condition: device
+    device_id: c53e5d4f4fcd4a15a6503896224fdbfd
+    domain: device_tracker
+    entity_id: device_tracker.redmi
+    type: is_not_home
+  - condition: device
+    device_id: f9072345c3ad453095aa94120f1cb805
+    domain: device_tracker
+    entity_id: device_tracker.iphone
+    type: is_not_home
+  action:
+  - scene: scene.luces_y_enchufes_off_2
+  - data:
+      message: Todo apagado, vuelve pronto
+    service: notify.mobile_app_redmi_note_8t
+  - data:
+      message: Todo apagado, vuelve pronto
+    service: notify.mobile_app_iphone
+  mode: single
+- id: '1592257123061'
+  alias: Nueva update de Hassio
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.updater
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Nueva version de Hassio {{states.sensor.version_homeassistant.state}}.
+      title: Hassio Update
+    service: notify.oscar_telegram
+  - data:
+      message: Nueva version de Hassio {{states.sensor.version_homeassistant.state}}.
+      title: Hassio Update
+    service: notify.mobile_app_iphone
+  - data:
+      message: Nueva version de Hassio {{states.sensor.version_homeassistant.state}}.
+      title: Hassio Update
+    service: notify.mobile_app_redmi_note_8t
+  - data:
+      data:
+        type: announce
+      message: Tienes una nueva update en Hassio,   La nueva es   versión {{states.sensor.version_homeassistant.state}}.
+      target: media_player.salon
+    service: notify.alexa_media
+  mode: single
+- id: '1581795041817'
+  alias: Desarmar alarma
+  description: Desactiva la alarma con voz
+  trigger:
+  - entity_id: alarm_control_panel.alarma_casa
+    platform: state
+    to: disarmed
+  condition: []
+  action:
+  - entity_id: script.1581795605169
+    service: script.turn_on
+  - delay: 00:00:30
+  - data: {}
+    entity_id: scene.apaga_luces_salon
+    service: scene.turn_on
+  mode: single
+- id: '1581864109280'
+  alias: Alerta al activar la Alarma
+  description: Cambiar el estado de pendiente a armada
+  trigger:
+  - entity_id: alarm_control_panel.alarma_casa
+    from: disarmed
+    platform: state
+  condition:
+  - condition: device
+    device_id: c53e5d4f4fcd4a15a6503896224fdbfd
+    domain: device_tracker
+    entity_id: device_tracker.redmi
+    type: is_not_home
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: f9072345c3ad453095aa94120f1cb805
+      domain: device_tracker
+      entity_id: device_tracker.iphone
+      type: is_not_home
+  action:
+  - data:
+      entity_id: script.1581809964483
+    entity_id: script.1581809964483
+    service: script.turn_on
+  - data:
+      message: Alarma activada
+    service: notify.oscar_telegram
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 10005
+      ringtone_vol: 15
+    service: xiaomi_aqara.play_ringtone
+  - data:
+      message: Alerta alarma activada
+    service: notify.mobile_app_redmi_note_8t
+  - data:
+      message: Alerta alarma activada
+    service: notify.mobile_app_redmi_note_8t
+  - delay: 00:00:10
+  - entity_id: light.gateway
+    service: light.turn_off
+  mode: single
+- id: '1581864554678'
+  alias: Puerta activa alarma
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.sensor_puerta_contact
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.xiaomi_gateway_alarm
+    state: armed_home
+  - condition: device
+    device_id: f9072345c3ad453095aa94120f1cb805
+    domain: device_tracker
+    entity_id: device_tracker.iphone
+    type: is_home
+  action:
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: La alarma fue activada
+    service: tts.google_translate_say
+  - data:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 235
+      - 0
+    entity_id: light.gateway
+    service: light.turn_on
+  - delay: 00:00:05
+  - data:
+      entity_id: alarm_control_panel.xiaomi_gateway_alarm
+    entity_id: alarm_control_panel.xiaomi_gateway_alarm
+    service: alarm_control_panel.alarm_trigger
+  - data:
+      entity_id: light.gateway
+    entity_id: light.gateway
+    service: light.turn_off
+  mode: single
+- id: '1581871333121'
+  alias: Sound Alarm
+  description: ''
+  trigger:
+  - entity_id: alarm_control_panel.alarma_casa
+    platform: state
+    to: triggered
+  condition: []
+  action:
+  - data:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 0
+      - 0
+    entity_id: light.gateway_light_7811dc64e652X
+    service: light.turn_on
+  - delay: 00:00:05
+  - data:
+      brightness: 255
+      rgb_color:
+      - 0
+      - 0
+      - 255
+    entity_id: light.gateway
+    service: light.turn_on
+  - delay: 00:00:05
+  - data:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 0
+      - 0
+    entity_id: light.gateway
+    service: light.turn_on
+  - entity_id: script.1581864887624
+    service: script.turn_on
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 10007
+      ringtone_vol: 5
+    entity_id: light.gateway
+    service: xiaomi_aqara.play_ringtone
+  mode: single
+- id: '1582154575851'
+  alias: Armar Alarma
+  description: ''
+  trigger:
+  - entity_id: alarm_control_panel.alarma_casa
+    from: disarmed
+    platform: state
+  condition: []
+  action:
+  - data:
+      brightness: 255
+      rgb_color:
+      - 0
+      - 255
+      - 0
+    entity_id: light.gateway
+    service: light.turn_on
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: Sistema armado. tienes 10 segundos para salir.
+    service: tts.google_translate_say
+  - delay: 00:00:10
+  - device_id: 83a5ea7b68ae4746a38ca0677d95458c
+    domain: light
+    entity_id: light.gateway
+    type: turn_off
+  - data: {}
+    entity_id: alarm_control_panel.alarma_casa
+    service: alarm_control_panel.alarm_arm_home
+  - data:
+      data:
+        type: announce
+      message: La alarma se activo, no te perocupes, yo controlo la casa
+      target: media_player.salon
+    service: notify.alexa_media_salon
+  mode: single
+- id: '1595717408946'
+  alias: Luz Pasillo
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.movimiento_pasillo_occupancy
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - condition: device
+    device_id: f9072345c3ad453095aa94120f1cb805
+    domain: device_tracker
+    entity_id: device_tracker.iphone
+    type: is_home
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: c53e5d4f4fcd4a15a6503896224fdbfd
+      domain: device_tracker
+      entity_id: device_tracker.redmi
+      type: is_home
+  - brightness_pct: 50
+    device_id: 80bbbb6cabd24e5c94e28af6e61587a0
+    domain: light
+    entity_id: light.luz_pasillo
+    type: turn_on
+  - delay: 00:02:00
+  - device_id: 80bbbb6cabd24e5c94e28af6e61587a0
+    domain: light
+    entity_id: light.luz_pasillo
+    type: turn_off
+  mode: single
+- id: '1596715112094'
+  alias: Luz dormitorio
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.movimiento_dormitorio_occupancy
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - condition: device
+    device_id: d38404e3064241f4aa14a006ad7fa4f0
+    domain: binary_sensor
+    entity_id: binary_sensor.dormitorio6c2_occupancy
+    type: is_motion
+  - brightness_pct: 26
+    device_id: d9da19610f5142d0afd38548d5ae37bc
+    domain: light
+    entity_id: light.luz_dormitorio_light
+    flash: short
+    type: turn_on
+  - delay: 00:02:00
+  - device_id: d9da19610f5142d0afd38548d5ae37bc
+    domain: light
+    entity_id: light.luz_dormitorio_light
+    type: turn_off
+  mode: single
+- id: '1590232985121'
+  alias: AC Dormitorio ON
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.sensor_dormitorio_temperature'') > states(''input_number.ac_on'')
+      }}'
+  - at: '9:30:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: device_tracker.iphone
+    state: home
+  - after: '14:00'
+    before: 04:00
+    condition: time
+  - condition: state
+    entity_id: climate.dormitorio
+    state: 'off'
+  - condition: template
+    value_template: '{{ states(''sensor.sensor_dormitorio_temperature'') > states(''input_number.ac_on'')
+      }}'
+  action:
+  - data: {}
+    entity_id: climate.dormitorio
+    service: climate.turn_on
+  - data:
+      fan_mode: high
+    entity_id: climate.dormitorio
+    service: climate.set_fan_mode
+  - data:
+      hvac_mode: cool
+    entity_id: climate.dormitorio
+    service: climate.set_hvac_mode
+  - data:
+      message: Comprobando que no esat todo correcto 😘
+      title: Enciendo aire
+    service: notify.mobile_app_iphone
+  mode: single
+- id: '1590235536113'
+  alias: AC Dormitorio Sleep
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.sensor_dormitorio_temperature'') < states(''input_number.ac_confortable'')
+      }}'
+  condition:
+  - condition: state
+    entity_id: device_tracker.iphone
+    state: home
+  - condition: and
+    conditions:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: climate.dormitorio
+        state: 'off'
+    - condition: template
+      value_template: '{{ states.climate.dormitorio.attributes.fan_mode != ''quiet''
+        }}'
+  - condition: template
+    value_template: '{{ states(''sensor.sensor_dormitorio_temperature'') < states(''input_number.ac_confortable'')
+      }}'
+  action:
+  - data:
+      fan_mode: quiet
+    entity_id: climate.dormitorio
+    service: climate.set_fan_mode
+  - data: {}
+    entity_id: climate.dormitorio
+    service: climate.turn_on
+  mode: single
+- id: '1590247146056'
+  alias: AC - Dormitorio Off
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states(''input_number.ac_off'') > states(''sensor.sensor_dormitorio_temperature'')
+      }}'
+  - at: '23:00:00'
+    platform: time
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: climate.dormitorio
+      state: 'off'
+  action:
+  - data: {}
+    entity_id: climate.dormitorio
+    service: climate.turn_off
+  - delay: '900'
+  - condition: template
+    value_template: '{{ states(''input_number.ac_confortable'') > states(''sensor.sensor_dormitorio_temperature'')
+      }}'
+  - after: '9:30:00'
+    before: 04:00
+    condition: time
+  - data: {}
+    entity_id: climate.dormitorio
+    service: climate.turn_on
+  mode: single

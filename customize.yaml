@@ -1,0 +1,51 @@
+switch.lampara:
+  friendly_name: Lampara
+  icon: mdi:desk-lamp
+switch.lavadora:
+  friendly_name: Lavadora
+  icon: mdi:washing-machine
+switch.ventilador:
+  friendly_name: ventilador
+  icon: mdi:fan
+switch.tv_phillips:
+  icon: mdi:television-classic
+device_tracker.redmi5plus_redmi:
+  friendly_name: Rocio
+  entity_picture: /local/rocio.jpg
+device_tracker.redmi:
+  friendly_name: Oscar
+  entity_picture: /local/oscar.jpg
+device_tracker.life360_rodrigo:
+  friendly_name: Rodrigo Pérez Abanto
+  entity_picture: /local/Rodrigo.jpg
+person.oscar:
+  source: device_tracker.redmi
+device_tracker.iphone:
+  friendly_name: Iphone
+  entity_picture: /local/oscar.jpg
+light.luz_dormitorio:
+  friendly_name: Luz dormitorio
+  icon: mdi:bed
+light.luz_pasillo:
+  friendly_name: Luz Pasillo
+light.gateway:
+  friendly_name: Gateway
+  icon: mdi:alarm-light
+light.camara_nano_light:
+  friendly_name: Nano
+  icon: mdi:cat
+media_player.echo_dot_oscar:
+  friendly_name: Echo Oscar 1
+  icon: si:amazon alexa
+media_player.echo_dot_oscar_2:
+  friendly_name: Echo Oscar 2
+  icon: si:amazon alexa
+media_player.supertv:
+  friendly_name: Xiaomi MiBox
+  icon: si:xiaomi
+media_player.mini:
+  friendly_name: Google mini
+  icon: mdi:google-home
+media_player.edison_primo_s2:
+  friendly_name: Edison Primo S2
+  icon: si:prime video

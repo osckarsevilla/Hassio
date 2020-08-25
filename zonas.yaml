@@ -1,0 +1,25 @@
+- name: Casa rocio
+  latitude: !secret latitud_cr
+  longitude: !secret longitud_cr
+  radius: 25
+  icon: mdi:worker
+- name: Casa Sevilla
+  latitude: !secret longitud_h
+  longitude: !secret latitud_h
+  radius: 25
+  icon: mdi:home-assistant
+- name: Trabajo Rocio
+  latitude: !secret latitud_r
+  longitude: !secret longitud_r
+  radius: 25
+  icon: mdi:worker
+- name: Alicante
+  latitude: !secret latitud_a
+  longitude: !secret longitud_a
+  radius: 25
+  icon: mdi:beach
+- name: Barbate
+  latitude: !secret latitud_bar
+  longitude: !secret longitud_bar
+  icon: mdi:beach
+  radius: 25

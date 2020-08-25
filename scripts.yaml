@@ -1,0 +1,135 @@
+'990':
+  alias: FIN DE COLADA
+  sequence:
+  - data:
+      entity_id: input_select.lavadora_status
+      option: Apagado
+    service: input_select.select_option
+  - data:
+      entity_id: timer.fin_lavadora
+    service: timer.cancel
+  - delay: 00:00:06
+  - data:
+      entity_id: media_player.dormitorio_principal
+      language: es
+      message: Perfecto, ya no te recordaré mas que tiendas, pero si que recójas la
+        ropa
+    service: tts.google_translate_say
+  - data:
+      data:
+        type: announce
+      message: La lavadora ya termino, puedes subir a tender la ropa cuando quieras
+      target: media_player.salon
+    service: notify.alexa_media_equipo
+  mode: single
+zigbee2mqtt_rename:
+  alias: Renombrar
+  sequence:
+    service: mqtt.publish
+    data_template:
+      topic: zigbee2mqtt/bridge/config/rename
+      payload_template: "{\n  \"old\": \"{{ states.input_text.zigbee2mqtt_old_name.state\
+        \ | string }}\",\n  \"new\": \"{{ states.input_text.zigbee2mqtt_new_name.state\
+        \ | string }}\"\n}"
+zigbee2mqtt_remove:
+  alias: Eliminar
+  sequence:
+    service: mqtt.publish
+    data_template:
+      topic: zigbee2mqtt/bridge/config/remove
+      payload_template: '{{ states.input_text.zigbee2mqtt_remove.state | string }}'
+'1581795605169':
+  alias: Alarma desactivada
+  sequence:
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 10006
+      ringtone_vol: 5
+    service: xiaomi_aqara.play_ringtone
+  - entity_id: script.1581844558784
+    service: script.turn_off
+  - entity_id: script.1581809964483
+    service: script.turn_off
+  - entity_id: script.1581864887624
+    service: script.turn_off
+  - data:
+      entity_id: media_player.mini
+      language: es
+      message: La alarma fue desconectada.
+    service: tts.google_translate_say
+  - delay: 00:00:30
+  - data: {}
+    entity_id: alarm_control_panel.xiaomi_gateway_alarm
+    service: alarm_control_panel.alarm_disarm
+  - delay: 00:00:30
+  - entity_id: light.gateway_light
+    service: light.turn_off
+  - data: {}
+    entity_id: light.luz_salon
+    service: light.turn_off
+  mode: single
+  icon: mdi:bell-cancel
+'1581809964483':
+  alias: Flashing gateway con sonido
+  sequence:
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 1
+      ringtone_vol: 3
+    service: xiaomi_aqara.play_ringtone
+  - data:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 0
+      - 0
+    entity_id: light.gateway
+    service: light.turn_on
+  - scene: scene.flash_azul_y_rojo_gateway
+  - delay: 00:00:02
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 10007
+      ringtone_vol: 5
+    service: xiaomi_aqara.play_ringtone
+  - delay: 00:01:00
+  - device_id: 83a5ea7b68ae4746a38ca0677d95458c
+    domain: light
+    entity_id: light.gateway
+    type: turn_off
+  - data: {}
+    entity_id: light.luz_salon
+    service: light.turn_off
+  - data:
+      data:
+        type: announce
+      message: La alarma se activo, tienes 10 segundos para desactivar la alarma     o      notificaré
+        a Óscar que no eres persona de confianza
+      target: media_player.salon
+    service: notify.alexa_media_salon
+  mode: single
+  icon: mdi:bell-ring-outline
+'1581864887624':
+  alias: Sound Alarm
+  sequence:
+  - data:
+      gw_mac: 78:11:DC:64:E6:52
+      ringtone_id: 1
+      ringtone_vol: 7
+    service: xiaomi_aqara.play_ringtone
+  - delay: 00:00:02
+  - entity_id: script.1581809964483
+    service: script.turn_on
+  mode: single
+reload_config:
+  alias: Reload config
+  icon: mdi:home
+  mode: single
+  sequence:
+  - data: {}
+    service: homeassistant.check_config
+  - data: {}
+    service: homeassistant.reload_core_config
+  - delay: 00:00:30
+  - data: {}
+    service: homeassistant.restart

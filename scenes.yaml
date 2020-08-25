@@ -1,0 +1,79 @@
+- id: '1592272104808'
+  name: Luces y enchufes off
+  entities:
+    group.luces:
+      entity_id:
+      - switch.lampara
+      - light.luz_pasillo_light
+      - light.luz_salon
+      - light.gateway_light_7811dc64e652
+      - light.luz_dormitorio_light
+      friendly_name: Luces
+      order: 1
+      state: 'off'
+    switch.regleta_tv:
+      friendly_name: Regleta TV
+      icon: mdi:power-socket
+      load_power: 0
+      model: zimi.powerstrip.v2
+      state: 'off'
+      temperature: 53.18
+    switch.ventilador:
+      friendly_name: ventilador
+      icon: mdi:fan
+      state: 'off'
+  icon: mdi:toggle-switch
+- id: '1597843390754'
+  name: Flash policia Colorin
+  entities:
+    light.luz_salon:
+      brightness: 143
+      color_temp: 375
+      effect: Police2
+      effect_list:
+      - Strobe color
+      - Police
+      - Christmas
+      - RGB
+      - Random Loop
+      - Fast Random Loop
+      - LSD
+      - Slowdown
+      - Disco
+      - Strobe epilepsy!
+      - Alarm
+      - Police2
+      - WhatsApp
+      - Facebook
+      - Twitter
+      - Slow Temp
+      - Stop
+      flowing: true
+      friendly_name: Luz Salon
+      hs_color:
+      - 0
+      - 100
+      max_mireds: 588
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      state: 'on'
+      supported_features: 63
+      xy_color:
+      - 0.701
+      - 0.299
+  icon: mdi:police-badge
+- id: '1598116859150'
+  name: Apaga Luces Salón
+  entities:
+    group.luces_salon:
+      entity_id:
+      - light.gateway
+      - light.luz_salon
+      - switch.lampara
+      friendly_name: Ligth salon
+      order: 2
+      state: 'off'
+  icon: mdi:sofa

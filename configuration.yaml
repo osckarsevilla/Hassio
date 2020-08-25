@@ -1,0 +1,326 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  server_port: 8124
+# base_url: .duckdns.org:8123
+# ssl_certificate: /ssl/fullchain.pem
+# ssl_key: /ssl/privkey.pem
+homeassistant:
+  customize: !include customize.yaml
+
+  unit_system: metric
+  time_zone: Europe/Madrid
+  name: Casa
+  #  Location required to calculate the time the sun rises and sets
+  latitude: !secret latitud_h
+  longitude: !secret longitud_h
+#allowlist_external_dirs:
+#    - /mnt/Backup/Docker/Peliculas
+#    - /mnt/Series
+#    - /home/barebone
+#  Name of the location where Home Assistant is running
+
+#  altitude: 21
+# Purga de base de datos
+recorder:
+  purge_keep_days: 5
+  auto_purge: true
+  commit_interval: 1
+
+
+# Customization file
+
+# Text to speech
+tts:
+  - platform: google_translate
+##### YAML
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include_dir_list sensors/
+device_tracker: !include_dir_list device_tracker/
+#timer: !include_dir_merge_named timers/
+binary_sensor: !include_dir_list binary_sensors/
+switch: !include_dir_list switches/
+#media_player: !include_dir_list media_players/
+#binary_sensor: !include binary_sensor.yaml
+#input_boolean: !include input_boolean.yaml
+input_select: !include_dir_merge_named input_select/
+input_boolean: !include_dir_merge_named input_boolean/
+input_number: !include_dir_merge_named input_number/
+#automation: !include_dir_merge_list automation/
+zone: !include zonas.yaml
+input_text: !include input_text.yaml
+
+
+
+
+  #### Temas
+frontend:
+  themes: !include_dir_merge_named themes
+
+
+
+
+ ############## XIAOMI #################
+
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: !secret mac_gw
+  ### Yeeligth
+
+
+yeelight:
+  devices:
+    192.168.31.216:
+      name: Luz Salon
+#### stream
+
+
+
+
+
+ #### Camaras
+
+
+camera:
+
+  - platform: generic
+    still_image_url: https://api.sat24.com/mostrecent/SP/infraPolair' width=500 height=304
+    name: Mapa fijo
+  - platform: generic
+    still_image_url: https://api.sat24.com/animated/SP/rainTMC/1/Central%20European%20Standard%20Time/
+    name: Mapa animado
+
+     ######## Telegram ############
+
+
+notify:
+  - name: oscar_telegram
+    platform: telegram
+    api_key: !secret key_telegram
+    chat_id: !secret id_telegram
+
+
+telegram_bot:
+  platform: polling
+  api_key: !secret key_telegram
+  allowed_chat_ids: !secret id_telegram
+
+
+
+
+##### Remote ######
+remote:
+  - platform: broadlink
+    host: !secret host_salon
+    mac: !secret remote_salon
+    name: RM Salon
+  - platform: broadlink
+    host: !secret host_dormitorio
+    mac: !secret remote_dormitorio
+    name: RM Dormitorio
+#  - platform: xiaomi_miio
+#    host: 192.168.31.243
+#    token: !secret key_regleta
+
+
+
+
+
+
+### WEATHER
+weather:
+  - platform: darksky
+    api_key:  !secret darksky_key
+    mode: daily
+
+
+
+
+
+#####media_extractor ###
+
+media_extractor:
+  default_query: worst
+  customize:
+    media_player.dormitorio_principal:
+       music: bestaudio [ext=mp3]
+    media_player.echo:
+       music: bestaudio [ext=mp3]
+
+
+
+
+
+# speedtest
+
+# Example configuration.yaml entry
+speedtestdotnet:
+  scan_interval:
+    minutes: 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+
+
+
+media_player:
+
+  - platform: smartir
+    name: Edison Primo S2
+    device_code: 1000
+    controller_data: !secret host_salon
+
+
+
+  - platform: androidtv
+    host: 192.168.31.138 # change to IP address of your Android TV
+    name: SuperTV # Change to anything you like
+    adb_server_ip: 127.0.0.1
+    exclude_unnamed_apps: true
+    apps:
+      "org.xbmc.kodi": "Kodi"
+      "com.wiseplay": "Wiseplay"
+      "com.amazon.amazonvideo.livingroom": "Amazon Prime Video"
+      "com.hbo_android_tv": "HBO"
+      "org.jellyfin.androidtv": "Jellyfin"
+      "com.google.android.tvlauncher": "Home"
+      "com.google.android.youtube.tv": "Youtube"
+
+
+
+  - platform: kodi
+    host: !secret kodi_host
+    name: Kodi MiBox
+
+
+smartir:
+  update_branch: rc
+
+
+
+climate:
+  - platform: smartir
+    name: Dormitorio
+    device_code: 1062
+    controller_data: !secret host_dormitorio
+    temperature_sensor: sensor.dormitorio825_temperature
+    humidity_sensor: sensor.dormitorio825_humidity
+#    power_sensor: binary_sensor.ac_on
+################################################################################
+########### Panel Hassio   #####################################################
+################################################################################
+panel_iframe: # remove if you already have in your configuration.yaml
+  vscode:
+    title: 'VSCode'
+    url: 'http://192.168.31.50:8443'
+    icon: si:visual studio code
+  cockpit_raspi:
+    title: Cockpit Raspi
+    url: http://192.168.31.60:9090
+    icon: si:raspberry pi
+  cockpit:
+    title: 'Cockpit Barebone'
+    url: 'http://192.168.31.50:9090'
+    icon: si:debian
+  zigbee_map:
+    title: 'Mapa Zigbbe'
+    url: 'http://192.168.31.50:8880/'
+    icon: si:zigbee
+  yeeligth:
+    title: 'Colors'
+    url: https://www.w3.org/TR/css-color-3/#svg-color
+    icon: mdi:lightbulb
+  nodered:
+    title: 'Node-Red'
+    url: 'http://192.168.31.50:1880'
+    icon: si:node-red
+  emoji:
+    title: 'Emoji'
+    url: https://emojipedia.org/
+    icon: mdi:emoticon-excited-outline
+
+###################
+
+simpleicons:
+##################
+timer:
+  zigbee_permit_join:
+    name: Time remaining
+    duration: 120
+  fin_lavadora:
+    duration: '00:15:00'
+
+##############################
+########## Docker ############
+
+monitor_docker:
+  - name: Docker
+    containers:
+      - 02_Zigbee2mqtt
+      - 09_Plex
+      - 08_Transmission
+      - 07_Jellyfin
+      - 03_Mqtt
+      - 06_Heimdall
+      - 05_zigbee2mqqt-assistant
+      - homeassistant
+      - hassio_supervisor
+    monitored_conditions:
+      - version
+      - uptime
+      - containers_running
+      - containers_memory
+      - containers_cpu_percentage
+      - containers_total
+      - containers_stopped
+      - images
+      - state
+      - cpu_percentage
+      - status
+      - memory
+
+
+
+
+####################################################
+#                                                  #
+#                     Alarm                        #
+#                                                  #
+####################################################
+# Example configuration.yaml entry
+alarm_control_panel:
+  - platform: manual
+    name: ALARMA CASA
+#    code: '1234'
+    arming_time: 30
+    delay_time: 20
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      arming_time: 0
+      delay_time: 0
+
+
+
+###### Notificaciones iOs################
+ios:
+  push:
+    categories:
+      - name: prueba
+        identifier: 'prueba'
+        actions:
+          - identifier: 'OPCION1'
+            title: 'Opcion1'
+          - identifier: 'OPCION2'
+            title: 'Opcion2'

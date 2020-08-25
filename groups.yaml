@@ -1,0 +1,36 @@
+
+  Salon:
+    name: Todas las luces y enchufes del Salon
+    entities:
+      - switch.lampara
+      - switch.ventilador
+      - light.luz_salon
+      - light.gateway
+      - switch.regleta_tv
+  Luces:
+    name: Todas las luces
+    entities:
+      - switch.lampara
+      - light.luz_pasillo_light
+      - light.luz_salon
+      - light.gateway
+      - light.luz_dormitorio_light
+  Luces_salon:
+    name: Luces del salón
+    entities:
+      - light.gateway
+      - light.luz_salon
+      - switch.lampara
+  Enchufes_salon:
+    name: Enchufes del salón
+    entities:
+      - switch.ventilador
+      - switch.regleta_tv
+  Dormitorio:
+    name: Entidades Dormitorio
+    entities:
+      - ligth.luz_dormitorio_light
+      - sensor.sensor_dormitorio_temperature
+      - sensor.sensor_dormitorio_humidity
+      - climate.dormitorio
+  
