@@ -1,4 +1,4 @@
-# Nmap 7.70 scan initiated Wed Aug 26 01:50:01 2020 as: nmap -sP -oG Host_IP_LOG.txt 192.168.31.1/24
+# Nmap 7.70 scan initiated Wed Aug 26 02:00:01 2020 as: nmap -sP -oG Host_IP_LOG.txt 192.168.31.1/24
 Host: 192.168.31.1 ()	Status: Up
 Host: 192.168.31.4 (RMPROPLUS-5a-57-19.Raspi)	Status: Up
 Host: 192.168.31.5 ()	Status: Up
@@ -17,4 +17,4 @@ Host: 192.168.31.216 ()	Status: Up
 Host: 192.168.31.230 (android-62f7d8edf9dde905.Raspi)	Status: Up
 Host: 192.168.31.238 ()	Status: Up
 Host: 192.168.31.250 ()	Status: Up
-# Nmap done at Wed Aug 26 01:50:11 2020 -- 256 IP addresses (18 hosts up) scanned in 9.95 seconds
+# Nmap done at Wed Aug 26 02:00:05 2020 -- 256 IP addresses (18 hosts up) scanned in 4.02 seconds

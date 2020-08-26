@@ -19,12 +19,11 @@
 .cloud
 .google.token
 .vscode
-
+shellscripts
 
 # Estos son los archivos que no estaran publicos en github
-## ip_bans.yaml  # ejemplo
 secrets.yaml
 known_devices.yaml
 home-assistant.log
 home-assistant_v2.db
-*.jpg
+!*.jpg
