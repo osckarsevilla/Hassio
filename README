@@ -1,0 +1,20 @@
+
+Proximamente....... Vídeo
+Toda esta info es gracias a https://community.home-assistant.io/t/sharing-your-configuration-on-github/195144
+
+Visita este canal, tienes el video con todas las explicaciones
+
+
+
+https://github.com/osckarsevilla/Hassio
+
+
+git init
+git config user.email osckarsevilla@gmail.com
+git config user.name osckarsevilla
+git add .
+git commit
+
+
+git remote add origin https://github.com/osckarsevilla/Hassio
+git push -u origin master
