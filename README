@@ -9,12 +9,3 @@ Visita este canal, tienes el video con todas las explicaciones
 https://github.com/osckarsevilla/Hassio
 
 
-git init
-git config user.email osckarsevilla@gmail.com
-git config user.name osckarsevilla
-git add .
-git commit
-
-
-git remote add origin https://github.com/osckarsevilla/Hassio
-git push -u origin master
